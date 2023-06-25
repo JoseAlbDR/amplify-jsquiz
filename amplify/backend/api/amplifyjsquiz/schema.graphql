@@ -1,0 +1,9 @@
+type Note @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  question: String!
+  code: String
+  options: [String!]
+  correctOption: Int!
+  points: Int!
+  answer: String!
+}

@@ -5,7 +5,7 @@ import Main from "./Main";
 import Loader from "./Loader";
 import Error from "./Error";
 import Question from "./Question";
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import StartScreen from "./StartScreen";
 import NextButton from "./NextButton";
 import PrevButton from "./PrevButton";
@@ -17,13 +17,24 @@ import { Amplify } from "aws-amplify";
 import config from "../aws-exports";
 import "@aws-amplify/ui-react/styles.css";
 import {
+  createNote as createNoteMutation,
+  deleteNote as deleteNoteMutation,
+} from "../graphql/mutations";
+import {
   withAuthenticator,
   Button,
   Heading,
-  Image,
   View,
   Card,
+  Flex,
+  TextAreaField,
+  TextField,
+  Text,
 } from "@aws-amplify/ui-react";
+
+import { API } from "aws-amplify";
+import { listNotes } from "../graphql/queries";
+import InsertQuery from "./InsertQuery";
 Amplify.configure(config);
 
 // "loading", "error", "ready", "active", "finished"
@@ -142,24 +153,71 @@ function App({ signOut }) {
     failedQuestions,
     wrongQuestionIndex,
   } = state;
-
+  const [notes, setNotes] = useState([]);
   const maxScore = questions.reduce(
     (acc, question) => acc + question.points,
     0
   );
+
+  async function createNote(event) {
+    event.preventDefault();
+    const form = new FormData(event.target);
+    const data = {
+      question: form.get("question"),
+      code: form.get("code"),
+      options: [
+        form.get("option1"),
+        form.get("option2"),
+        form.get("option3"),
+        form.get("option4"),
+      ],
+      correctOption: +form.get("correctOption"),
+      points: 10,
+      answer: form.get("answer"),
+    };
+    console.log(data);
+    await API.graphql({
+      query: createNoteMutation,
+      variables: { input: data },
+    });
+    fetchNotes();
+    event.target.reset();
+  }
+
+  async function fetchNotes() {
+    const apiData = await API.graphql({ query: listNotes });
+    const notesFromAPI = apiData.data.listNotes.items;
+    setNotes(notesFromAPI);
+    console.log(notesFromAPI);
+  }
+
+  async function deleteNote({ id }) {
+    const newNotes = notes.filter((note) => note.id !== id);
+    setNotes(newNotes);
+    await API.graphql({
+      query: deleteNoteMutation,
+      variables: { input: { id } },
+    });
+  }
+
+  // useEffect(() => {
+  //   fetchNotes();
+  // }, []);
 
   useEffect(function () {
     async function getData() {
       try {
         // dispatch({ type: "loading" });
         // const res = await fetch("http://localhost:8000/questions");
-        const res = await fetch(
-          "http://localhost:9999/.netlify/functions/data-json"
-        );
-        if (!res.ok) throw new Error("Something happened.");
-        const data = await res.json();
-        if (!data) throw new Error("No data.");
-        dispatch({ type: "dataRecieved", payload: data });
+        // const res = await fetch(
+        //   "http://localhost:9999/.netlify/functions/data-json"
+        // );
+        // if (!res.ok) throw new Error("Something happened.");
+        // const data = await res.json();
+        // if (!data) throw new Error("No data.");
+        const apiData = await API.graphql({ query: listNotes });
+        const notesFromAPI = apiData.data.listNotes.items;
+        dispatch({ type: "dataRecieved", payload: notesFromAPI });
       } catch (err) {
         console.log(err.message);
         dispatch({ type: "dataFailed", payload: err.message });
@@ -180,6 +238,100 @@ function App({ signOut }) {
         </View>
       </>
       <Header />
+
+      <View className="App">
+        <Heading level={1}>My Notes App</Heading>
+        <View as="form" margin="3rem 0" onSubmit={createNote}>
+          <Flex direction="column" justifyContent="center">
+            <TextField
+              name="question"
+              placeholder="Question"
+              label="Question"
+              labelHidden
+              variation="quiet"
+              required
+            />
+            <TextAreaField
+              name="code"
+              placeholder="Code"
+              label="Code"
+              labelHidden
+              variation="quiet"
+              required
+            />
+            <TextField
+              name="option1"
+              placeholder="option1"
+              label="option1"
+              labelHidden
+              variation="quiet"
+              required
+            />
+            <TextField
+              name="option2"
+              placeholder="option2"
+              label="option2"
+              labelHidden
+              variation="quiet"
+              required
+            />
+            <TextField
+              name="option3"
+              placeholder="option3"
+              label="option3"
+              labelHidden
+              variation="quiet"
+            />
+            <TextField
+              name="option4"
+              placeholder="option4"
+              label="option4"
+              labelHidden
+              variation="quiet"
+            />
+            <TextField
+              name="correctOption"
+              placeholder="Correct Option"
+              label="Correct Option"
+              labelHidden
+              variation="quiet"
+              required
+            />
+            <TextField
+              name="answer"
+              placeholder="answer"
+              label="Answer"
+              labelHidden
+              variation="quiet"
+              required
+            />
+            <Button type="submit" variation="primary">
+              Create Note
+            </Button>
+          </Flex>
+        </View>
+        <Heading level={2}>Current Notes</Heading>
+        <View margin="3rem 0">
+          {notes.map((note) => (
+            <Flex
+              key={note.id || note.name}
+              direction="row"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Text as="strong" fontWeight={700}>
+                {note.name}
+              </Text>
+              <Text as="span">{note.description}</Text>
+              <Button variation="link" onClick={() => deleteNote(note)}>
+                Delete note
+              </Button>
+            </Flex>
+          ))}
+        </View>
+        <Button onClick={signOut}>Sign Out</Button>
+      </View>
+
       <Main>
         {status === "loading" && <Loader />}
         {status === "error" && <Error msg={errorMsg} />}
@@ -264,4 +416,3 @@ function App({ signOut }) {
 }
 
 export default withAuthenticator(App);
-// revoked
