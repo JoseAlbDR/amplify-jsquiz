@@ -13,6 +13,18 @@ import Progress from "./Progress";
 import FinishScreen from "./FinishScreen";
 import Footer from "./Footer";
 import Timer from "./Timer";
+import { Amplify } from "aws-amplify";
+import config from "../aws-exports";
+import "@aws-amplify/ui-react/styles.css";
+import {
+  withAuthenticator,
+  Button,
+  Heading,
+  Image,
+  View,
+  Card,
+} from "@aws-amplify/ui-react";
+Amplify.configure(config);
 
 // "loading", "error", "ready", "active", "finished"
 const initialState = {
@@ -115,7 +127,7 @@ function reducer(state, action) {
   }
 }
 
-export default function App() {
+function App({ signOut }) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
     questions,
@@ -158,8 +170,16 @@ export default function App() {
 
   return (
     <div className="app">
+      <>
+        <View className="App">
+          <Card>
+            {/* <Image src={logo} className="App-logo" alt="logo" /> */}
+            <Heading level={1}>We now have Auth!</Heading>
+          </Card>
+          <Button onClick={signOut}>Sign Out</Button>
+        </View>
+      </>
       <Header />
-
       <Main>
         {status === "loading" && <Loader />}
         {status === "error" && <Error msg={errorMsg} />}
@@ -242,3 +262,5 @@ export default function App() {
     </div>
   );
 }
+
+export default withAuthenticator(App);
