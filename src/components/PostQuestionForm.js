@@ -68,7 +68,7 @@ function PostQuestionForm({ createNote }) {
             variation="quiet"
             required
           />
-          <TextField
+          <TextAreaField
             name="answer"
             placeholder="answer"
             label="Answer"
