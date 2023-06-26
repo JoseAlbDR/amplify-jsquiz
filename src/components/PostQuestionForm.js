@@ -7,11 +7,11 @@ import {
   TextField,
 } from "@aws-amplify/ui-react";
 
-function PostQuestionForm({ createNote }) {
+function PostQuestionForm({ addQuestion }) {
   return (
     <View className="App">
       <Heading level={1}>My Notes App</Heading>
-      <View as="form" margin="3rem 0" onSubmit={createNote}>
+      <View as="form" margin="3rem 0" onSubmit={addQuestion}>
         <Flex direction="column" justifyContent="center">
           <TextField
             name="question"

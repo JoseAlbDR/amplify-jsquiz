@@ -50,9 +50,13 @@ const initialState = {
 };
 
 let initialQuestions;
+let wrongQuestions;
+let correctQuestions;
 
+// useReducer reducer function
 function reducer(state, action) {
   switch (action.type) {
+    // fetch data
     case "dataRecieved":
       initialQuestions = action.payload;
       return {
@@ -60,8 +64,10 @@ function reducer(state, action) {
         questions: action.payload,
         status: "ready",
       };
+    // data failed error
     case "dataFailed":
       return { ...state, status: "error", errorMsg: action.payload };
+    // start quiz
     case "start":
       const shufled = initialQuestions.slice().sort(() => 0.5 - Math.random());
       const selected = shufled.slice(0, state.numQuestions);
@@ -71,13 +77,13 @@ function reducer(state, action) {
         questions: selected,
         remainSeconds: state.numQuestions * state.difficulty,
       };
+    // click on a question to answer it
     case "newAnswer":
       const question = state.questions.at(state.currQuestion);
       return {
         ...state,
         answer: action.payload,
         score:
-          // action.payload = selected index
           action.payload === question.correctOption
             ? state.score + question.points
             : state.score,
@@ -90,6 +96,7 @@ function reducer(state, action) {
             ? [...state.wrongQuestionIndex, action.payload]
             : state.wrongQuestionIndex,
       };
+    // Next question button
     case "nextQuestion":
       return {
         ...state,
@@ -97,8 +104,10 @@ function reducer(state, action) {
         answer: null,
         curOpen: null,
       };
+    // Previous question button
     case "prevQuestion":
       return { ...state, currQuestion: state.currQuestion - 1 };
+    // Finish button
     case "finish":
       return {
         ...state,
@@ -106,22 +115,28 @@ function reducer(state, action) {
         highScore:
           state.score > state.highScore ? state.score : state.highScore,
       };
+    // Restart button
     case "restart":
       return {
         ...initialState,
         status: "ready",
         questions: initialQuestions,
       };
+    // timer
     case "tick":
       return {
         ...state,
         remainSeconds: state.remainSeconds - 1,
         status: state.remainSeconds === 0 ? "finished" : state.status,
       };
+    // Options
+    // Number of questions
     case "setQuestions":
       return { ...state, numQuestions: action.payload };
+    // Difficulty (time per question)
     case "setDifficulty":
       return { ...state, difficulty: action.payload };
+    // Review button
     case "review":
       return {
         ...state,
@@ -131,6 +146,7 @@ function reducer(state, action) {
         status: "review",
         answer: null,
       };
+    // Open Answer accordion
     case "openAccordion":
       console.log(action.payload);
       console.log(state.curOpen);
@@ -160,12 +176,14 @@ function App() {
     curOpen,
   } = state;
 
+  // MaxScore
   const maxScore = questions.reduce(
     (acc, question) => acc + question.points,
     0
   );
 
-  async function createNote(event) {
+  // AddQuestion to DB
+  async function addQuestion(event) {
     event.preventDefault();
     const form = new FormData(event.target);
     const data = {
@@ -190,6 +208,7 @@ function App() {
     event.target.reset();
   }
 
+  // Fetch data on first APP mount
   useEffect(function () {
     async function getData() {
       try {
@@ -205,6 +224,7 @@ function App() {
   }, []);
 
   return (
+    // Authenticator
     <ThemeProvider theme={Theme()}>
       <Authenticator components={components}>
         {({ signOut, user }) => (
@@ -228,12 +248,14 @@ function App() {
             </>
             <Header />
             <>
+              {/* Add question Form for admin user */}
               {user.username === "admin" && (
-                <PostQuestionForm createNote={createNote} />
+                <PostQuestionForm addQuestion={addQuestion} />
               )}
             </>
 
             <Main>
+              {/* Loading, Error, Ready, Status */}
               {status === "loading" && <Loader />}
               {status === "error" && <Error msg={errorMsg} />}
               {status === "ready" && (
@@ -242,6 +264,7 @@ function App() {
                   dispatch={dispatch}
                 />
               )}
+              {/* Quiz Loop */}
               {status === "active" && (
                 <>
                   <Progress
@@ -272,6 +295,7 @@ function App() {
                   </Footer>
                 </>
               )}
+              {/* Review Loop */}
               {status === "review" && (
                 <>
                   <Progress
@@ -291,26 +315,26 @@ function App() {
                     wrongQuestionIndex={wrongQuestionIndex[currQuestion]}
                     curOpen={curOpen}
                   />
+
                   <Footer>
-                    {
-                      <div className="finish-buttons">
-                        {currQuestion !== 0 ? (
-                          <PrevButton dispatch={dispatch}>Previous</PrevButton>
-                        ) : (
-                          <button className="btn" disabled={true}>
-                            Previous
-                          </button>
-                        )}
-                        <NextButton dispatch={dispatch}>
-                          {currQuestion + 1 === questions.length
-                            ? "Finish"
-                            : "Next"}
-                        </NextButton>
-                      </div>
-                    }
+                    <div className="finish-buttons">
+                      {currQuestion !== 0 ? (
+                        <PrevButton dispatch={dispatch}>Previous</PrevButton>
+                      ) : (
+                        <button className="btn" disabled={true}>
+                          Previous
+                        </button>
+                      )}
+                      <NextButton dispatch={dispatch}>
+                        {currQuestion + 1 === questions.length
+                          ? "Finish"
+                          : "Next"}
+                      </NextButton>
+                    </div>
                   </Footer>
                 </>
               )}
+              {/* Finish Screen */}
               {status === "finished" && (
                 <FinishScreen
                   failedQuestions={failedQuestions}
