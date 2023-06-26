@@ -11,6 +11,7 @@ function Options({
   }
   const answered = answer !== null;
 
+  // Show Question options based on reviewQuestions state and answered variable
   return (
     <div className="options">
       {options.map((option, i) => (
