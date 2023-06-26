@@ -10,6 +10,7 @@ function Question({
   score,
   reviewQuestions = false,
   wrongQuestionIndex,
+  curOpen,
 }) {
   const {
     question,
@@ -22,7 +23,7 @@ function Question({
   useEffect(() => {
     Prism.highlightAll();
   }, [currQuestion]);
-
+  console.log(curOpen);
   return (
     <>
       <h4>{question}</h4>
@@ -39,9 +40,15 @@ function Question({
         wrongQuestionIndex={wrongQuestionIndex}
       />
       {reviewQuestions && (
-        <p style={{ fontSize: "1.5rem", marginBottom: "1.5rem" }}>
-          {<Accordion data={[{ title: "Anwser", text: reviewAnswer }]} />}
-        </p>
+        <div style={{ fontSize: "1.5rem", marginBottom: "1.5rem" }}>
+          {
+            <Accordion
+              curOpen={curOpen}
+              dispatch={dispatch}
+              data={[{ title: "Answer", text: reviewAnswer }]}
+            />
+          }
+        </div>
       )}
     </>
   );
