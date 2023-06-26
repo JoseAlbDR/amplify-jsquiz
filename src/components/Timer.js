@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 
+// Game Loop Timer
 function Timer({ seconds, dispatch }) {
   const mins = Math.trunc(seconds / 60);
   const secs = seconds % 60;
@@ -7,7 +8,6 @@ function Timer({ seconds, dispatch }) {
   useEffect(
     function () {
       const timer = setInterval(function () {
-        // console.log("tick");
         dispatch({ type: "tick" });
       }, 1000);
       return () => clearInterval(timer);
