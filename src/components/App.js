@@ -94,10 +94,10 @@ function reducer(state, action) {
       };
     case "nextQuestion":
       console.log(state.currQuestion);
-      return { ...state, currQuestion: state.currQuestion++, answer: null };
+      return { ...state, currQuestion: ++state.currQuestion, answer: null };
     case "prevQuestion":
       console.log("here");
-      return { ...state, currQuestion: state.currQuestion-- };
+      return { ...state, currQuestion: --state.currQuestion };
     case "finish":
       return {
         ...state,
