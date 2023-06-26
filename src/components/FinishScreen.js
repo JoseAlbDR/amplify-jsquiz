@@ -25,6 +25,7 @@ function FinishScreen({
       </p>
       <p className="highscore">(HighScore: {highScore} points)</p>
       <div className="finish-buttons">
+        {/* Review Button */}
         <button
           disabled={failedQuestions.length === 0}
           className="btn"
@@ -32,7 +33,7 @@ function FinishScreen({
         >
           Review Answers
         </button>
-
+        {/* Restart Button */}
         <button
           className="btn btn-ui"
           onClick={() => dispatch({ type: "restart" })}
