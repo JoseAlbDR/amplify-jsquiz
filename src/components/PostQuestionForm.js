@@ -5,7 +5,6 @@ import {
   Flex,
   TextAreaField,
   TextField,
-  Text,
 } from "@aws-amplify/ui-react";
 
 function PostQuestionForm({ createNote }) {

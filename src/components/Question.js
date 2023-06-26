@@ -23,7 +23,7 @@ function Question({
   useEffect(() => {
     Prism.highlightAll();
   }, [currQuestion]);
-  console.log(curOpen);
+
   return (
     <>
       <h4>{question}</h4>
