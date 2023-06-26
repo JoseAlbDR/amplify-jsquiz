@@ -12,8 +12,8 @@ export const components = {
   },
 };
 
+// SignUp Register Theme
 export const Theme = function () {
-  // SignUp Register Theme
   const { tokens } = useTheme();
   const theme = {
     name: "Dark",
