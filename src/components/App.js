@@ -134,20 +134,20 @@ function reducer(state, action) {
   }
 }
 console.log("veces");
-jsQuestions.forEach((q) => {
-  const bulkData = {
-    question: q.question,
-    code: q.code,
-    options: q.options,
-    correctOption: q.correctOption,
-    points: 10,
-    answer: q.answer,
-  };
-  API.graphql({
-    query: createNoteMutation,
-    variables: { input: bulkData },
-  });
-});
+// jsQuestions.forEach((q) => {
+//   const bulkData = {
+//     question: q.question,
+//     code: q.code,
+//     options: q.options,
+//     correctOption: q.correctOption,
+//     points: 10,
+//     answer: q.answer,
+//   };
+//   API.graphql({
+//     query: createNoteMutation,
+//     variables: { input: bulkData },
+//   });
+// });
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
