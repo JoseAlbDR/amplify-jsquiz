@@ -16,12 +16,15 @@ import config from "../aws-exports";
 import "@aws-amplify/ui-react/styles.css";
 import { createNote as createNoteMutation } from "../graphql/mutations";
 import {
-  withAuthenticator,
+  Authenticator,
   Button,
   Heading,
   View,
   Card,
   Flex,
+  useTheme,
+  Image,
+  ThemeProvider,
 } from "@aws-amplify/ui-react";
 
 import { API } from "aws-amplify";
@@ -131,7 +134,7 @@ function reducer(state, action) {
   }
 }
 
-function App({ signOut, user }) {
+function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
     questions,
@@ -191,113 +194,189 @@ function App({ signOut, user }) {
     getData();
   }, []);
 
-  return (
-    <div className="app">
-      <>
-        <View className="App">
-          <Flex>
-            <Card>
-              {/* <Image src={logo} className="App-logo" alt="logo" /> */}
-              <Heading level={1}>
-                <h3 style={{ color: "white", marginBottom: "1rem" }}>
-                  Welcome {user.username}
-                </h3>
-              </Heading>
-            </Card>
-            <Button className="sign-out-btn" onClick={signOut}>
-              Sign Out
-            </Button>
-          </Flex>
+  const components = {
+    Header() {
+      const { tokens } = useTheme();
+
+      return (
+        <View textAlign="center" padding={tokens.space.large}>
+          <Image alt="Amplify logo" src="pngwing.com.png" />
         </View>
-      </>
-      <Header />
-      <>
-        {user.username === "admin" && (
-          <PostQuestionForm createNote={createNote} />
-        )}
-      </>
+      );
+    },
+  };
 
-      <Main>
-        {status === "loading" && <Loader />}
-        {status === "error" && <Error msg={errorMsg} />}
-        {status === "ready" && (
-          <StartScreen numQuestions={questions.length} dispatch={dispatch} />
-        )}
-        {status === "active" && (
-          <>
-            <Progress
-              currQuestion={currQuestion}
-              numQuestions={questions.length}
-              score={score}
-              maxScore={maxScore}
-              answer={answer}
-            />
-            {console.log(wrongQuestionIndex)}
-            <Question
-              currQuestion={questions[currQuestion]}
-              dispatch={dispatch}
-              answer={answer}
-              score={score}
-            />
+  const { tokens } = useTheme();
+  const theme = {
+    name: "Dark",
+    tokens: {
+      colors: {
+        background: {
+          primary: {
+            value: tokens.colors.neutral["90"].value,
+          },
+          secondary: {
+            value: tokens.colors.neutral["100"].value,
+          },
+        },
+        font: {
+          interactive: {
+            value: tokens.colors.white.value,
+          },
+        },
+        brand: {
+          primary: {
+            10: tokens.colors.teal["100"],
+            80: tokens.colors.teal["40"],
+            90: tokens.colors.teal["20"],
+            100: tokens.colors.teal["10"],
+          },
+        },
+      },
+      components: {
+        tabs: {
+          item: {
+            _focus: {
+              color: {
+                value: tokens.colors.white.value,
+              },
+            },
+            _hover: {
+              color: {
+                value: tokens.colors.yellow["80"].value,
+              },
+            },
+            _active: {
+              color: {
+                value: tokens.colors.white.value,
+              },
+            },
+          },
+        },
+      },
+    },
+  };
 
-            <Footer>
-              <Timer seconds={remainSeconds} dispatch={dispatch} />
-              {answer !== null && (
-                <NextButton dispatch={dispatch}>
-                  {currQuestion + 1 === questions.length ? "Finish" : "Next"}
-                </NextButton>
+  return (
+    <ThemeProvider theme={theme}>
+      <Authenticator components={components}>
+        {({ signOut, user }) => (
+          <div className="app">
+            <>
+              <View className="App">
+                <Flex>
+                  <Card>
+                    {/* <Image src={logo} className="App-logo" alt="logo" /> */}
+                    <Heading level={1}>
+                      <h3 style={{ color: "white", marginBottom: "1rem" }}>
+                        Welcome {user.username}
+                      </h3>
+                    </Heading>
+                  </Card>
+                  <Button className="sign-out-btn" onClick={signOut}>
+                    Sign Out
+                  </Button>
+                </Flex>
+              </View>
+            </>
+            <Header />
+            <>
+              {user.username === "admin" && (
+                <PostQuestionForm createNote={createNote} />
               )}
-            </Footer>
-          </>
-        )}
-        {status === "review" && (
-          <>
-            <Progress
-              currQuestion={currQuestion}
-              numQuestions={questions.length}
-              score={score}
-              maxScore={maxScore}
-              answer={answer}
-            />
+            </>
 
-            <Question
-              currQuestion={questions[currQuestion]}
-              dispatch={dispatch}
-              answer={answer}
-              score={score}
-              reviewQuestions={reviewQuestions}
-              wrongQuestionIndex={wrongQuestionIndex[currQuestion]}
-            />
-            <Footer>
-              {
-                <div className="finish-buttons">
-                  {currQuestion !== 0 ? (
-                    <PrevButton dispatch={dispatch}>Previous</PrevButton>
-                  ) : (
-                    <button className="btn" disabled={true}>
-                      Previous
-                    </button>
-                  )}
-                  <NextButton dispatch={dispatch}>
-                    {currQuestion + 1 === questions.length ? "Finish" : "Next"}
-                  </NextButton>
-                </div>
-              }
-            </Footer>
-          </>
+            <Main>
+              {status === "loading" && <Loader />}
+              {status === "error" && <Error msg={errorMsg} />}
+              {status === "ready" && (
+                <StartScreen
+                  numQuestions={questions.length}
+                  dispatch={dispatch}
+                />
+              )}
+              {status === "active" && (
+                <>
+                  <Progress
+                    currQuestion={currQuestion}
+                    numQuestions={questions.length}
+                    score={score}
+                    maxScore={maxScore}
+                    answer={answer}
+                  />
+                  {console.log(wrongQuestionIndex)}
+                  <Question
+                    currQuestion={questions[currQuestion]}
+                    dispatch={dispatch}
+                    answer={answer}
+                    score={score}
+                  />
+
+                  <Footer>
+                    <Timer seconds={remainSeconds} dispatch={dispatch} />
+                    {answer !== null && (
+                      <NextButton dispatch={dispatch}>
+                        {currQuestion + 1 === questions.length
+                          ? "Finish"
+                          : "Next"}
+                      </NextButton>
+                    )}
+                  </Footer>
+                </>
+              )}
+              {status === "review" && (
+                <>
+                  <Progress
+                    currQuestion={currQuestion}
+                    numQuestions={questions.length}
+                    score={score}
+                    maxScore={maxScore}
+                    answer={answer}
+                  />
+
+                  <Question
+                    currQuestion={questions[currQuestion]}
+                    dispatch={dispatch}
+                    answer={answer}
+                    score={score}
+                    reviewQuestions={reviewQuestions}
+                    wrongQuestionIndex={wrongQuestionIndex[currQuestion]}
+                  />
+                  <Footer>
+                    {
+                      <div className="finish-buttons">
+                        {currQuestion !== 0 ? (
+                          <PrevButton dispatch={dispatch}>Previous</PrevButton>
+                        ) : (
+                          <button className="btn" disabled={true}>
+                            Previous
+                          </button>
+                        )}
+                        <NextButton dispatch={dispatch}>
+                          {currQuestion + 1 === questions.length
+                            ? "Finish"
+                            : "Next"}
+                        </NextButton>
+                      </div>
+                    }
+                  </Footer>
+                </>
+              )}
+              {status === "finished" && (
+                <FinishScreen
+                  failedQuestions={failedQuestions}
+                  score={score}
+                  maxScore={maxScore}
+                  dispatch={dispatch}
+                  highScore={highScore}
+                />
+              )}
+            </Main>
+          </div>
         )}
-        {status === "finished" && (
-          <FinishScreen
-            failedQuestions={failedQuestions}
-            score={score}
-            maxScore={maxScore}
-            dispatch={dispatch}
-            highScore={highScore}
-          />
-        )}
-      </Main>
-    </div>
+      </Authenticator>
+    </ThemeProvider>
   );
 }
 
-export default withAuthenticator(App);
+export default App;
