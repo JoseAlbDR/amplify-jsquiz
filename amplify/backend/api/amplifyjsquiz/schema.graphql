@@ -7,3 +7,12 @@ type Note @model @auth(rules: [{ allow: public }]) {
   points: Int!
   answer: String!
 }
+
+type User @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  name: String!
+  wrong: Int!
+  correct: Int!
+  total: Int!
+  maxScore: Int!
+}
