@@ -93,6 +93,7 @@ function reducer(state, action) {
             : state.wrongQuestionIndex,
       };
     case "nextQuestion":
+      console.log(state.currQuestion);
       return { ...state, currQuestion: state.currQuestion++, answer: null };
     case "prevQuestion":
       console.log("here");
@@ -133,21 +134,7 @@ function reducer(state, action) {
       throw new Error("Unknow action.");
   }
 }
-console.log("veces");
-// jsQuestions.forEach((q) => {
-//   const bulkData = {
-//     question: q.question,
-//     code: q.code,
-//     options: q.options,
-//     correctOption: q.correctOption,
-//     points: 10,
-//     answer: q.answer,
-//   };
-//   API.graphql({
-//     query: createNoteMutation,
-//     variables: { input: bulkData },
-//   });
-// });
+
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
@@ -317,7 +304,7 @@ function App() {
                     maxScore={maxScore}
                     answer={answer}
                   />
-                  {console.log(wrongQuestionIndex)}
+
                   <Question
                     currQuestion={questions[currQuestion]}
                     dispatch={dispatch}

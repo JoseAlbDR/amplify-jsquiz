@@ -9,7 +9,6 @@ function Options({
   function handleAnswer(i) {
     dispatch({ type: "newAnswer", payload: i });
   }
-  console.log(answer);
   const answered = answer !== null;
 
   return (
