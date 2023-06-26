@@ -28,7 +28,6 @@ function PostQuestionForm({ createNote }) {
             label="Code"
             labelHidden
             variation="quiet"
-            required
           />
           <TextField
             name="option1"

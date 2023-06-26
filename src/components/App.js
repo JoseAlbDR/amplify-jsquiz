@@ -26,7 +26,6 @@ import {
   Image,
   ThemeProvider,
 } from "@aws-amplify/ui-react";
-import { jsQuestions } from "../js/converter";
 import { API } from "aws-amplify";
 import { listNotes } from "../graphql/queries";
 import PostQuestionForm from "./PostQuestionForm";
