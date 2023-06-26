@@ -1,6 +1,6 @@
 import Options from "./Options";
 import Prism from "prismjs";
-
+import Accordion from "./Accordion";
 import { useEffect } from "react";
 
 function Question({
@@ -40,7 +40,7 @@ function Question({
       />
       {reviewQuestions && (
         <p style={{ fontSize: "1.5rem", marginBottom: "1.5rem" }}>
-          {reviewAnswer}
+          {<Accordion data={[{ title: "Anwser", text: reviewAnswer }]} />}
         </p>
       )}
     </>
