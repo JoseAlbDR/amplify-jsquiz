@@ -194,6 +194,7 @@ function App() {
     getData();
   }, []);
 
+  // Authentification component (logo image)
   const components = {
     Header() {
       const { tokens } = useTheme();
@@ -206,6 +207,7 @@ function App() {
     },
   };
 
+  // SignUp Register Theme
   const { tokens } = useTheme();
   const theme = {
     name: "Dark",
@@ -303,6 +305,7 @@ function App() {
                     score={score}
                     maxScore={maxScore}
                     answer={answer}
+                    reviewQuestions={reviewQuestions}
                   />
 
                   <Question

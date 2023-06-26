@@ -1,15 +1,25 @@
-function Progress({ currQuestion, numQuestions, score, maxScore, answer }) {
+function Progress({
+  currQuestion,
+  numQuestions,
+  score,
+  maxScore,
+  answer,
+  reviewQuestions,
+}) {
   return (
     <div className="progress">
       <progress
         max={numQuestions}
-        value={currQuestion + +(answer !== null)}
+        value={
+          reviewQuestions ? currQuestion + +(answer !== null) : currQuestion + 1
+        }
       ></progress>
       <p>
         Question <strong>{currQuestion + 1}</strong>/{numQuestions}
       </p>
       <p>
-        <strong>{score}</strong>/{maxScore} points
+        <strong>{score}</strong>
+        {reviewQuestions && ` /${maxScore}`} points
       </p>
     </div>
   );
