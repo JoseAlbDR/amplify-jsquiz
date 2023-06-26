@@ -47,6 +47,7 @@ const initialState = {
   reviewQuestions: false,
   failedQuestions: [],
   wrongQuestionIndex: [],
+  curOpen: null,
 };
 
 let initialQuestions;
@@ -68,12 +69,11 @@ function reducer(state, action) {
       return {
         ...state,
         status: "active",
-        remainSeconds: state.questions.length * state.difficulty,
         questions: selected,
+        remainSeconds: state.numQuestions * state.difficulty,
       };
     case "newAnswer":
       const question = state.questions.at(state.currQuestion);
-      console.log(action.payload);
       return {
         ...state,
         answer: action.payload,
@@ -92,8 +92,12 @@ function reducer(state, action) {
             : state.wrongQuestionIndex,
       };
     case "nextQuestion":
-      console.log(state.currQuestion);
-      return { ...state, currQuestion: state.currQuestion + 1, answer: null };
+      return {
+        ...state,
+        currQuestion: state.currQuestion + 1,
+        answer: null,
+        curOpen: null,
+      };
     case "prevQuestion":
       console.log("here");
       return { ...state, currQuestion: state.currQuestion - 1 };
@@ -129,6 +133,13 @@ function reducer(state, action) {
         status: "review",
         answer: null,
       };
+    case "openAccordion":
+      console.log(action.payload);
+      console.log(state.curOpen);
+      return {
+        ...state,
+        curOpen: state.curOpen === action.payload ? null : action.payload,
+      };
     default:
       throw new Error("Unknow action.");
   }
@@ -148,6 +159,7 @@ function App() {
     reviewQuestions,
     failedQuestions,
     wrongQuestionIndex,
+    curOpen,
   } = state;
   const maxScore = questions.reduce(
     (acc, question) => acc + question.points,
@@ -343,6 +355,7 @@ function App() {
                     score={score}
                     reviewQuestions={reviewQuestions}
                     wrongQuestionIndex={wrongQuestionIndex[currQuestion]}
+                    curOpen={curOpen}
                   />
                   <Footer>
                     {
