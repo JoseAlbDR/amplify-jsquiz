@@ -1,10 +1,10 @@
 import Item from "./Item";
 
+// Show/Hide Answer Accordion Component
 export default function Accordion({ data, curOpen, dispatch }) {
   function handleIsOpen(num) {
     dispatch({ type: "openAccordion", payload: num });
   }
-
   return (
     <div className="accordion">
       {data.map((el, index) => (
