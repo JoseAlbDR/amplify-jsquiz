@@ -7,6 +7,7 @@ import {
   TextField,
 } from "@aws-amplify/ui-react";
 
+// Form to Post questions to Graphql API
 function PostQuestionForm({ addQuestion }) {
   return (
     <View className="App">
