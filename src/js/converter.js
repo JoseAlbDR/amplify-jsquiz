@@ -1,4 +1,4 @@
-const jsQuestions = [
+export const jsQuestions = [
   {
     question: `What's the output?`,
     code: `function sayHi() {

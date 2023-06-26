@@ -3,7 +3,7 @@ import Main from "./Main";
 import Loader from "./Loader";
 import Error from "./Error";
 import Question from "./Question";
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import StartScreen from "./StartScreen";
 import NextButton from "./NextButton";
 import PrevButton from "./PrevButton";
@@ -26,7 +26,7 @@ import {
   Image,
   ThemeProvider,
 } from "@aws-amplify/ui-react";
-
+import { jsQuestions } from "../js/converter";
 import { API } from "aws-amplify";
 import { listNotes } from "../graphql/queries";
 import PostQuestionForm from "./PostQuestionForm";
@@ -133,7 +133,21 @@ function reducer(state, action) {
       throw new Error("Unknow action.");
   }
 }
-
+console.log("veces");
+jsQuestions.forEach((q) => {
+  const bulkData = {
+    question: q.question,
+    code: q.code,
+    options: q.options,
+    correctOption: q.correctOption,
+    points: 10,
+    answer: q.answer,
+  };
+  API.graphql({
+    query: createNoteMutation,
+    variables: { input: bulkData },
+  });
+});
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
@@ -149,7 +163,6 @@ function App() {
     failedQuestions,
     wrongQuestionIndex,
   } = state;
-  console.log(questions);
   const maxScore = questions.reduce(
     (acc, question) => acc + question.points,
     0
@@ -171,7 +184,7 @@ function App() {
       points: 10,
       answer: form.get("answer"),
     };
-    console.log(data);
+
     await API.graphql({
       query: createNoteMutation,
       variables: { input: data },
@@ -266,11 +279,11 @@ function App() {
               <View className="App">
                 <Flex>
                   <Card>
-                    {/* <Image src={logo} className="App-logo" alt="logo" /> */}
-                    <Heading level={1}>
-                      <h3 style={{ color: "white", marginBottom: "1rem" }}>
-                        Welcome {user.username}
-                      </h3>
+                    <Heading
+                      level={1}
+                      style={{ color: "white", marginBottom: "1rem" }}
+                    >
+                      Welcome {user.username}
                     </Heading>
                   </Card>
                   <Button className="sign-out-btn" onClick={signOut}>
