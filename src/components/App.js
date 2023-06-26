@@ -21,6 +21,7 @@ import {
   Heading,
   View,
   Card,
+  Flex,
 } from "@aws-amplify/ui-react";
 
 import { API } from "aws-amplify";
@@ -131,7 +132,6 @@ function reducer(state, action) {
 }
 
 function App({ signOut, user }) {
-  console.log(user);
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
     questions,
@@ -146,7 +146,7 @@ function App({ signOut, user }) {
     failedQuestions,
     wrongQuestionIndex,
   } = state;
-
+  console.log(questions);
   const maxScore = questions.reduce(
     (acc, question) => acc + question.points,
     0
@@ -195,11 +195,19 @@ function App({ signOut, user }) {
     <div className="app">
       <>
         <View className="App">
-          <Card>
-            {/* <Image src={logo} className="App-logo" alt="logo" /> */}
-            <Heading level={1}>We now have Auth!</Heading>
-          </Card>
-          <Button onClick={signOut}>Sign Out</Button>
+          <Flex>
+            <Card>
+              {/* <Image src={logo} className="App-logo" alt="logo" /> */}
+              <Heading level={1}>
+                <h3 style={{ color: "white", marginBottom: "1rem" }}>
+                  Welcome {user.username}
+                </h3>
+              </Heading>
+            </Card>
+            <Button className="sign-out-btn" onClick={signOut}>
+              Sign Out
+            </Button>
+          </Flex>
         </View>
       </>
       <Header />

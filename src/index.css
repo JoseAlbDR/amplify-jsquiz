@@ -305,3 +305,18 @@ code[class*="language-"] {
   background-color: lightcoral;
   border: 2px solid lightcoral;
 }
+
+.sign-out-btn {
+  color: white !important;
+  align-self: center !important;
+  background-color: var(--color-dark) !important;
+}
+
+.sign-out-btn:hover {
+  background-color: var(--color-darkest) !important;
+}
+
+.amplify-card {
+  background-color: inherit !important;
+  font-family: inherit !important;
+}
