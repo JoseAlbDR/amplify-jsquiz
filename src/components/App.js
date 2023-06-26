@@ -53,6 +53,7 @@ let maxScore;
 let initialQuestions;
 let wrongQuestions;
 let correctQuestions;
+let totalQuestions = 0;
 
 // useReducer reducer function
 function reducer(state, action) {
@@ -111,6 +112,13 @@ function reducer(state, action) {
       return { ...state, currQuestion: state.currQuestion - 1 };
     // Finish button
     case "finish":
+      wrongQuestions = state.wrongQuestionIndex.length;
+      correctQuestions = state.numQuestions - wrongQuestions;
+      totalQuestions += state.numQuestions;
+
+      console.log(wrongQuestions);
+      console.log(correctQuestions);
+
       return {
         ...state,
         status: "finished",
@@ -150,8 +158,6 @@ function reducer(state, action) {
       };
     // Open Answer accordion
     case "openAccordion":
-      console.log(action.payload);
-      console.log(state.curOpen);
       return {
         ...state,
         curOpen: state.curOpen === action.payload ? null : action.payload,
