@@ -53,7 +53,6 @@ let maxScore;
 let initialQuestions;
 let wrongQuestions;
 let correctQuestions;
-let totalQuestions = 0;
 
 // useReducer reducer function
 function reducer(state, action) {
@@ -114,10 +113,16 @@ function reducer(state, action) {
     case "finish":
       wrongQuestions = state.wrongQuestionIndex.length;
       correctQuestions = state.numQuestions - wrongQuestions;
-      totalQuestions += state.numQuestions;
 
-      console.log(wrongQuestions);
-      console.log(correctQuestions);
+      const userData = {
+        name: action.payload,
+        wrong: wrongQuestions,
+        correct: correctQuestions,
+        total: state.numQuestions,
+        maxScore: state.score > state.highScore ? state.score : state.highScore,
+      };
+
+      console.log(userData);
 
       return {
         ...state,
@@ -288,7 +293,7 @@ function App() {
                   <Footer>
                     <Timer seconds={remainSeconds} dispatch={dispatch} />
                     {answer !== null && (
-                      <NextButton dispatch={dispatch}>
+                      <NextButton dispatch={dispatch} userName={user.username}>
                         {currQuestion + 1 === questions.length
                           ? "Finish"
                           : "Next"}

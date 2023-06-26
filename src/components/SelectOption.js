@@ -5,6 +5,7 @@ function SelectOption({ label, type, options, dispatch }) {
         <h4>{label}:</h4>
         <select
           className="btn"
+          style={{ textAlign: "center" }}
           onChange={(e) => dispatch({ type: type, payload: e.target.value })}
         >
           {options.map((option) => (
