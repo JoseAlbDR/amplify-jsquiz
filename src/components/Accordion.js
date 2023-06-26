@@ -1,4 +1,4 @@
-import Item from "./Item";
+import Item from "./AccordionItem";
 
 // Show/Hide Answer Accordion Component
 export default function Accordion({ data, curOpen, dispatch }) {

@@ -49,6 +49,7 @@ const initialState = {
   curOpen: null,
 };
 
+let maxScore;
 let initialQuestions;
 let wrongQuestions;
 let correctQuestions;
@@ -71,6 +72,7 @@ function reducer(state, action) {
     case "start":
       const shufled = initialQuestions.slice().sort(() => 0.5 - Math.random());
       const selected = shufled.slice(0, state.numQuestions);
+      maxScore = selected.reduce((acc, question) => acc + question.points, 0);
       return {
         ...state,
         status: "active",
@@ -175,12 +177,6 @@ function App() {
     wrongQuestionIndex,
     curOpen,
   } = state;
-
-  // MaxScore
-  const maxScore = questions.reduce(
-    (acc, question) => acc + question.points,
-    0
-  );
 
   // AddQuestion to DB
   async function addQuestion(event) {
