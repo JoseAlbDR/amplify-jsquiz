@@ -143,7 +143,6 @@ function reducer(state, action) {
     case "restart":
       return {
         ...initialState,
-        highScore: state.highScore,
         status: "ready",
         questions: initialQuestions,
         reviewQuestions: false,
@@ -241,6 +240,11 @@ function App() {
     getData();
   }, []);
 
+  function handleSignOut(signOut) {
+    signOut();
+    dispatch({ type: "restart" });
+  }
+
   return (
     // Authenticator
     <ThemeProvider theme={Theme()}>
@@ -258,7 +262,10 @@ function App() {
                       Welcome {user.username}
                     </Heading>
                   </Card>
-                  <Button className="sign-out-btn" onClick={signOut}>
+                  <Button
+                    className="sign-out-btn"
+                    onClick={() => handleSignOut(signOut)}
+                  >
                     Sign Out
                   </Button>
                 </Flex>
