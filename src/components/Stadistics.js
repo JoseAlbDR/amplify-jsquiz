@@ -1,11 +1,13 @@
-function Stadistics(userData) {
-  console.log(userData);
+function Stadistics({ userData }) {
+  // console.log(userData);
   return (
     <div>
-      <h4>
-        Total questions anwered X, total correct X, total incorrect X, MaxScore
-        X
-      </h4>
+      <p class="stadistics">
+        Total questions anwered <strong>{userData.total}</strong>, total correct{" "}
+        <strong>{userData.correct}</strong>, total incorrect{" "}
+        <strong>{userData.wrong}</strong>, MaxScore{" "}
+        <strong>{userData.maxScore}</strong>
+      </p>
     </div>
   );
 }

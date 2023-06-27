@@ -1,7 +1,8 @@
 import SelectOption from "./SelectOption";
 import { getUser } from "../js/userQueries";
 import { useEffect } from "react";
-function StartScreen({ numQuestions, dispatch, user }) {
+import Stadistics from "./Stadistics";
+function StartScreen({ numQuestions, dispatch, user, userData }) {
   useEffect(
     function () {
       async function loadUser() {

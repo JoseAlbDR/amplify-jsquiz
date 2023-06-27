@@ -44,7 +44,7 @@ const initialState = {
   highScore: 0,
   remainSeconds: null,
   numQuestions: 10,
-  difficulty: 45,
+  difficulty: 1,
   reviewQuestions: false,
   failedQuestions: [],
   wrongQuestionIndex: [],
@@ -66,10 +66,10 @@ function reducer(state, action) {
         status: "ready",
       };
     case "loadUser":
-      console.log(action.payload);
+      // console.log(action.payload);
       return {
         ...state,
-        userData: action.payload ? action.payload : state.userData,
+        userData: action.payload,
       };
     // data failed error
     case "dataFailed":
@@ -130,7 +130,7 @@ function reducer(state, action) {
         maxScore: highScore,
       };
 
-      console.log(state.userData);
+      // console.log(state.userData);
       updateUser(state.userData, userData);
 
       return {
@@ -235,7 +235,7 @@ function App() {
         const notesFromAPI = apiData.data.listNotes.items;
         dispatch({ type: "dataRecieved", payload: notesFromAPI });
       } catch (err) {
-        console.log(err.message);
+        // console.log(err.message);
         dispatch({ type: "dataFailed", payload: err.message });
       }
     }
@@ -272,8 +272,8 @@ function App() {
                   </Button>
                 </Flex>
               </View>
-              <Stadistics />
             </>
+            <Stadistics userData={userData} />
             <Header />
             <>
               {/* Add question Form for admin user */}
@@ -287,11 +287,14 @@ function App() {
               {status === "loading" && <Loader />}
               {status === "error" && <Error msg={errorMsg} />}
               {status === "ready" && (
-                <StartScreen
-                  numQuestions={questions.length}
-                  dispatch={dispatch}
-                  user={user}
-                />
+                <>
+                  <StartScreen
+                    numQuestions={questions.length}
+                    dispatch={dispatch}
+                    user={user}
+                    userData={userData}
+                  />
+                </>
               )}
               {/* Quiz Loop */}
               {status === "active" && (
