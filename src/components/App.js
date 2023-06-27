@@ -43,8 +43,8 @@ const initialState = {
   score: 0,
   highScore: 0,
   remainSeconds: null,
-  numQuestions: 45,
-  difficulty: 1,
+  numQuestions: 10,
+  difficulty: 45,
   reviewQuestions: false,
   failedQuestions: [],
   wrongQuestionIndex: [],
@@ -273,7 +273,13 @@ function App() {
                 </Flex>
               </View>
             </>
-            <Stadistics userData={userData} />
+            {console.log(userData)}
+            {Object.keys(userData).length === 0 &&
+              userData.constructor === Object && (
+                <Loader msg="Loading User..." />
+              )}
+            {userData && <Stadistics userData={userData} />}
+
             <Header />
             <>
               {/* Add question Form for admin user */}
@@ -284,7 +290,7 @@ function App() {
 
             <Main>
               {/* Loading, Error, Ready, Status */}
-              {status === "loading" && <Loader />}
+              {status === "loading" && <Loader msg="Loading Questions..." />}
               {status === "error" && <Error msg={errorMsg} />}
               {status === "ready" && (
                 <>

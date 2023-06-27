@@ -203,7 +203,6 @@ progress {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 4rem;
   gap: 1.6rem;
 
   color: var(--color-medium);
