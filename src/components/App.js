@@ -3,7 +3,7 @@ import Main from "./Main";
 import Loader from "./Loader";
 import Error from "./Error";
 import Question from "./Question";
-import { useEffect, useReducer, useRef } from "react";
+import { useCallback, useEffect, useReducer, useRef } from "react";
 import StartScreen from "./StartScreen";
 import NextButton from "./NextButton";
 import PrevButton from "./PrevButton";
@@ -28,6 +28,7 @@ import { API } from "aws-amplify";
 import { listNotes } from "../graphql/queries";
 import PostQuestionForm from "./PostQuestionForm";
 import { components, Theme } from "../script/Auth";
+import { updateUser } from "../js/userQueries";
 
 Amplify.configure(config);
 
@@ -50,11 +51,8 @@ const initialState = {
   userData: {},
 };
 
-let maxScore;
 let initialQuestions;
-let wrongQuestions;
-let correctQuestions;
-
+let maxScore;
 // useReducer reducer function
 function reducer(state, action) {
   switch (action.type) {
@@ -65,6 +63,12 @@ function reducer(state, action) {
         ...state,
         questions: action.payload,
         status: "ready",
+      };
+    case "loadUser":
+      console.log(action.payload);
+      return {
+        ...state,
+        userData: action.payload ? action.payload : state.userData,
       };
     // data failed error
     case "dataFailed":
@@ -112,25 +116,26 @@ function reducer(state, action) {
       return { ...state, currQuestion: state.currQuestion - 1 };
     // Finish button
     case "finish":
-      console.log(state.score);
-      console.log(state.highScore);
-      wrongQuestions = state.wrongQuestionIndex.length;
-      correctQuestions = state.numQuestions - wrongQuestions;
-      maxScore = state.score > state.highScore ? state.score : state.highScore;
+      const wrongQuestions = state.wrongQuestionIndex.length;
+      const correctQuestions = state.numQuestions - wrongQuestions;
+      const highScore =
+        state.score > state.highScore ? state.score : state.highScore;
 
       const userData = {
         name: action.payload,
         wrong: wrongQuestions,
         correct: correctQuestions,
         total: state.numQuestions,
-        maxScore: maxScore,
+        maxScore: highScore,
       };
 
-      console.log(userData);
+      console.log(state.userData);
+      updateUser(state.userData, userData);
 
       return {
         ...state,
         status: "finished",
+        // userData: updatedUser,
         highScore:
           state.score > state.highScore ? state.score : state.highScore,
       };
@@ -186,15 +191,15 @@ function App() {
     errorMsg,
     currQuestion,
     answer,
-    score,
     highScore,
+    score,
     remainSeconds,
     reviewQuestions,
     failedQuestions,
     wrongQuestionIndex,
     curOpen,
+    userData,
   } = state;
-  const currUser = useRef(null);
   // AddQuestion to DB
   async function addQuestion(event) {
     event.preventDefault();
@@ -276,7 +281,6 @@ function App() {
                   numQuestions={questions.length}
                   dispatch={dispatch}
                   user={user}
-                  currUser={currUser}
                 />
               )}
               {/* Quiz Loop */}
@@ -356,7 +360,12 @@ function App() {
                   score={score}
                   maxScore={maxScore}
                   dispatch={dispatch}
-                  highScore={highScore}
+                  highScore={
+                    userData?.maxScore > highScore
+                      ? userData.maxScore
+                      : highScore
+                  }
+                  user={user}
                 />
               )}
             </Main>

@@ -1,10 +1,30 @@
+import { getUser } from "../js/userQueries";
+import { useEffect } from "react";
 function FinishScreen({
   score,
   maxScore,
   dispatch,
   highScore,
   failedQuestions,
+  user,
 }) {
+  useEffect(
+    function () {
+      async function loadUser() {
+        try {
+          // dispatch({ type: "loadUser", payload: getUser(user) });
+          // console.log(await getUser(user));
+          const currentUser = await getUser(user);
+          dispatch({ type: "loadUser", payload: currentUser });
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      loadUser();
+    },
+    [user, dispatch]
+  );
+
   const percentaje = (score / maxScore) * 100;
   let emoji;
 
