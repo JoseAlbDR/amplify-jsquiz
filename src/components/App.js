@@ -131,7 +131,7 @@ function reducer(state, action) {
       };
 
       // console.log(state.userData);
-      updateUser(state.userData, userData);
+      if (!state.reviewQuestions) updateUser(state.userData, userData);
 
       return {
         ...state,
@@ -273,7 +273,7 @@ function App() {
                 </Flex>
               </View>
             </>
-            {console.log(userData)}
+
             {Object.keys(userData).length === 0 &&
               userData.constructor === Object && (
                 <Loader msg="Loading User..." />
