@@ -3,7 +3,7 @@ import Main from "./Main";
 import Loader from "./Loader";
 import Error from "./Error";
 import Question from "./Question";
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useRef } from "react";
 import StartScreen from "./StartScreen";
 import NextButton from "./NextButton";
 import PrevButton from "./PrevButton";
@@ -47,6 +47,7 @@ const initialState = {
   failedQuestions: [],
   wrongQuestionIndex: [],
   curOpen: null,
+  userData: {},
 };
 
 let maxScore;
@@ -111,15 +112,18 @@ function reducer(state, action) {
       return { ...state, currQuestion: state.currQuestion - 1 };
     // Finish button
     case "finish":
+      console.log(state.score);
+      console.log(state.highScore);
       wrongQuestions = state.wrongQuestionIndex.length;
       correctQuestions = state.numQuestions - wrongQuestions;
+      maxScore = state.score > state.highScore ? state.score : state.highScore;
 
       const userData = {
         name: action.payload,
         wrong: wrongQuestions,
         correct: correctQuestions,
         total: state.numQuestions,
-        maxScore: state.score > state.highScore ? state.score : state.highScore,
+        maxScore: maxScore,
       };
 
       console.log(userData);
@@ -130,10 +134,11 @@ function reducer(state, action) {
         highScore:
           state.score > state.highScore ? state.score : state.highScore,
       };
-    // Restart button
+    // Reset button
     case "restart":
       return {
         ...initialState,
+        highScore: state.highScore,
         status: "ready",
         questions: initialQuestions,
         reviewQuestions: false,
@@ -189,7 +194,7 @@ function App() {
     wrongQuestionIndex,
     curOpen,
   } = state;
-
+  const currUser = useRef(null);
   // AddQuestion to DB
   async function addQuestion(event) {
     event.preventDefault();
@@ -270,6 +275,8 @@ function App() {
                 <StartScreen
                   numQuestions={questions.length}
                   dispatch={dispatch}
+                  user={user}
+                  currUser={currUser}
                 />
               )}
               {/* Quiz Loop */}

@@ -1,6 +1,8 @@
 import SelectOption from "./SelectOption";
+import { getUser } from "../js/userQueries";
+function StartScreen({ numQuestions, dispatch, user }) {
+  getUser(user);
 
-function StartScreen({ numQuestions, dispatch }) {
   return (
     <div className="start">
       <h2 className="center">Welcome to The JavaScript QUIZ!</h2>
