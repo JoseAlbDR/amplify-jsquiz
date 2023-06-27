@@ -136,6 +136,7 @@ function reducer(state, action) {
         ...initialState,
         status: "ready",
         questions: initialQuestions,
+        reviewQuestions: false,
       };
     // timer
     case "tick":

@@ -19,7 +19,7 @@ function Progress({
       </p>
       <p>
         <strong>{score}</strong>
-        {reviewQuestions && ` /${maxScore}`} points
+        {!reviewQuestions && ` /${maxScore}`} points
       </p>
     </div>
   );
