@@ -381,3 +381,12 @@ code[class*="language-"] {
 .open .title {
   color: var(--color-theme);
 }
+
+.code {
+  display: inline-block;
+  /* white-space: normal; */
+  white-space: break-spaces;
+  max-width: 100%;
+  word-break: break-all;
+  word-wrap: break-word;
+}

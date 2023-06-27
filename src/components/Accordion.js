@@ -5,6 +5,7 @@ export default function Accordion({ data, curOpen, dispatch }) {
   function handleIsOpen(num) {
     dispatch({ type: "openAccordion", payload: num });
   }
+
   return (
     <div className="accordion">
       {data.map((el, index) => (
@@ -15,7 +16,9 @@ export default function Accordion({ data, curOpen, dispatch }) {
           onOpen={handleIsOpen}
           curOpen={curOpen}
         >
-          {el.text}
+          <pre>
+            <code className="code">{el.text}</code>
+          </pre>
         </Item>
       ))}
     </div>

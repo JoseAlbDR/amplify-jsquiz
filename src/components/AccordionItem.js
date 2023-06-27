@@ -1,7 +1,5 @@
 export default function Item({ num, title, children, onOpen, curOpen }) {
-  console.log(curOpen);
   const isOpen = num === curOpen;
-  console.log(isOpen);
 
   return (
     <div onClick={() => onOpen(num)} className={`item ${isOpen ? "open" : ""}`}>
