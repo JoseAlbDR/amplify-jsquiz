@@ -171,6 +171,10 @@ function reducer(state, action) {
         status: "review",
         answer: null,
       };
+    case "signOut":
+      return {
+        ...initialState,
+      };
     // Open Answer accordion
     case "openAccordion":
       return {
@@ -242,7 +246,7 @@ function App() {
 
   function handleSignOut(signOut) {
     signOut();
-    dispatch({ type: "restart" });
+    dispatch({ type: "signOut" });
   }
 
   return (
