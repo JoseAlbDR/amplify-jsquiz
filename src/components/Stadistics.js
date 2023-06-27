@@ -2,7 +2,7 @@ function Stadistics({ userData }) {
   // console.log(userData);
   return (
     <div>
-      <p class="stadistics">
+      <p className="stadistics">
         Total questions anwered <strong>{userData.total}</strong>, total correct{" "}
         <strong>{userData.correct}</strong>, total incorrect{" "}
         <strong>{userData.wrong}</strong>, MaxScore{" "}
