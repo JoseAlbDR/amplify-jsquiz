@@ -43,7 +43,7 @@ const initialState = {
   score: 0,
   highScore: 0,
   remainSeconds: null,
-  numQuestions: 10,
+  numQuestions: 45,
   difficulty: 1,
   reviewQuestions: false,
   failedQuestions: [],

@@ -42,7 +42,7 @@ body {
 }
 
 .main {
-  width: 50rem;
+  width: 60rem;
 }
 
 .app-header {
@@ -389,8 +389,6 @@ code[class*="language-"] {
   margin-bottom: 2rem;
   text-align: center;
 }
-
-/* Estilos generales */
 
 /* Agrega consultas de medios para dispositivos móviles */
 @media only screen and (max-width: 767px) {
