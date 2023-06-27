@@ -3,7 +3,7 @@ import Main from "./Main";
 import Loader from "./Loader";
 import Error from "./Error";
 import Question from "./Question";
-import { useCallback, useEffect, useReducer, useRef } from "react";
+import { useEffect, useReducer } from "react";
 import StartScreen from "./StartScreen";
 import NextButton from "./NextButton";
 import PrevButton from "./PrevButton";
@@ -29,6 +29,7 @@ import { listNotes } from "../graphql/queries";
 import PostQuestionForm from "./PostQuestionForm";
 import { components, Theme } from "../script/Auth";
 import { updateUser } from "../js/userQueries";
+import Stadistics from "./Stadistics";
 
 Amplify.configure(config);
 
@@ -171,10 +172,7 @@ function reducer(state, action) {
         status: "review",
         answer: null,
       };
-    case "signOut":
-      return {
-        ...initialState,
-      };
+
     // Open Answer accordion
     case "openAccordion":
       return {
@@ -246,7 +244,7 @@ function App() {
 
   function handleSignOut(signOut) {
     signOut();
-    dispatch({ type: "signOut" });
+    dispatch({ type: "restart" });
   }
 
   return (
@@ -274,6 +272,7 @@ function App() {
                   </Button>
                 </Flex>
               </View>
+              <Stadistics />
             </>
             <Header />
             <>
