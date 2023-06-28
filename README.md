@@ -45,6 +45,15 @@ The Quiz App has the following features:
 - Finish screen to display the final score and allow the user to restart the quiz.
 - Admin user functionality to add new questions.
 
+- In the **APP**, you must create an account by providing a verification code sent to the email you entered in the form. Once logged in, it will display your username along with the options to **Logout** or **Delete** the user and your statistics.
+
+- On the welcome screen, it will show the total number of questions currently in the **Database** (103 as of the time of this publication) and then give you the option to choose the number of questions you want to answer (10, 20, or 30) and the difficulty level, based on the time you have to answer each question (60s/question for **Easy**, 45s/question for **Normal**, 30s/question for **Hard**).
+
+- Once you start the **Quiz**, currently, the only way to exit is to either finish it or click **Logout**. When you click on an answer, the **Next** button will appear to proceed to the next question, and you won't be able to change your answer. To save your statistics, you need to finish the quiz.
+
+- On the **Completion** screen, after finishing a quiz, it will display the number of questions answered correctly and your score. On the same screen, you can click the **Review** button to go over the questions you answered incorrectly. In **Review** mode, it will show the incorrect and correct answers, and you can click **Answer** to see the explanation for the correct answer.
+
+
 ### Credits
 
 The Quiz App is developed by J.Alberto Delgado.
