@@ -15,8 +15,8 @@ function Credits() {
           rel="noreferrer"
         >
           Ultimate React Course
-        </a>
-        by
+        </a>{" "}
+        by{" "}
         <a href="https://codingheroes.io/" target="_blank" rel="noreferrer">
           Jonas Schmedtmann
         </a>

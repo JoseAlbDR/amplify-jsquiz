@@ -399,7 +399,7 @@ function App() {
                   loadingUser={loadingUser}
                 />
               )}
-              <Credits />
+              {status !== "active" && <Credits />}
             </Main>
           </div>
         )}
