@@ -326,6 +326,13 @@ code[class*="language-"] {
   font-size: 1.5rem !important;
 }
 
+.amplify-text.amplify-authenticator__subtitle {
+  color: #fff !important;
+  background-color: rgb(113, 184, 113) !important;
+  font-size: 1.2rem !important;
+  padding-left: 1rem;
+}
+
 .accordion {
   /* width: 700px; */
   margin: 50px auto;
