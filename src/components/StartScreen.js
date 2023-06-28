@@ -53,15 +53,15 @@ function StartScreen({ numQuestions, dispatch, user, userData }) {
           options={[
             {
               name: "Easy",
-              value: 45,
+              value: 60,
             },
             {
               name: "Normal",
-              value: 30,
+              value: 45,
             },
             {
               name: "Hard",
-              value: 15,
+              value: 30,
             },
           ]}
         />
