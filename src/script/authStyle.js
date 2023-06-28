@@ -6,7 +6,7 @@ export const components = {
     const { tokens } = useTheme();
     return (
       <View textAlign="center" padding={tokens.space.large}>
-        <Image alt="Amplify logo" src="pngwing.com.png" />
+        <Image alt="Amplify logo" src="./assets/pngwing.com.png" />
       </View>
     );
   },

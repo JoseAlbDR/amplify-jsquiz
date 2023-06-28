@@ -27,8 +27,8 @@ import {
 import { API } from "aws-amplify";
 import { listQuestions } from "../graphql/queries";
 import PostQuestionForm from "./PostQuestionForm";
-import { components, Theme } from "../script/Auth";
-import { updateUser } from "../js/userQueries";
+import { components, Theme } from "../script/authStyle";
+import { updateUser } from "../script/userQueries";
 import Stadistics from "./Stadistics";
 
 Amplify.configure(config);
@@ -201,6 +201,7 @@ function App() {
     curOpen,
     userData,
   } = state;
+
   // AddQuestion to DB
   async function addQuestion(event) {
     event.preventDefault();

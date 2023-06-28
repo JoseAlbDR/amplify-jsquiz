@@ -1,4 +1,4 @@
-import { getUser } from "../js/userQueries";
+import { getUser } from "../script/userQueries";
 import { useEffect } from "react";
 function FinishScreen({
   score,
@@ -12,8 +12,6 @@ function FinishScreen({
     function () {
       async function loadUser() {
         try {
-          // dispatch({ type: "loadUser", payload: getUser(user) });
-          // console.log(await getUser(user));
           const currentUser = await getUser(user);
           dispatch({ type: "loadUser", payload: currentUser });
         } catch (err) {
