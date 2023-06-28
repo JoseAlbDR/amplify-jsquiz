@@ -32,7 +32,7 @@ import PostQuestionForm from "./PostQuestionForm";
 import { components, Theme } from "../script/authStyle";
 import { updateUser } from "../script/userQueries";
 import Stadistics from "./Stadistics";
-import { handleDeleteUser } from "../script/handlers";
+import { handleDeleteUser, handleSignOut } from "../script/eventHandlers";
 
 Amplify.configure(config);
 
@@ -246,11 +246,6 @@ function App() {
     getData();
   }, []);
 
-  function handleSignOut(signOut) {
-    signOut();
-    dispatch({ type: "restart" });
-  }
-
   return (
     // Authenticator
     <ThemeProvider theme={defaultTheme}>
@@ -271,7 +266,7 @@ function App() {
 
                   <Button
                     className="sign-out-btn"
-                    onClick={() => handleSignOut(signOut)}
+                    onClick={() => handleSignOut(signOut, dispatch)}
                   >
                     Sign Out
                   </Button>

@@ -2,7 +2,6 @@ import { API } from "aws-amplify";
 import * as mutations from "../graphql/mutations";
 
 export const handleDeleteUser = async (user) => {
-  console.log(user);
   const userDetails = {
     id: user?.attributes.sub,
   };
@@ -12,6 +11,10 @@ export const handleDeleteUser = async (user) => {
     variables: { input: userDetails },
   });
 
-  console.log(deleteUser);
   alert(`user ${user?.username} has been successfully deleted`);
 };
+
+export function handleSignOut(signOut, dispatch) {
+  signOut();
+  dispatch({ type: "restart" });
+}
