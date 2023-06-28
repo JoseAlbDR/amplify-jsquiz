@@ -33,6 +33,7 @@ import { components, Theme } from "../script/authStyle";
 import { updateUser } from "../script/userQueries";
 import Stadistics from "./Stadistics";
 import { handleDeleteUser, handleSignOut } from "../script/eventHandlers";
+import Credits from "./Credits";
 
 Amplify.configure(config);
 
@@ -398,6 +399,7 @@ function App() {
                   loadingUser={loadingUser}
                 />
               )}
+              <Credits />
             </Main>
           </div>
         )}
