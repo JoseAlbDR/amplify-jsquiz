@@ -32,6 +32,7 @@ import PostQuestionForm from "./PostQuestionForm";
 import { components, Theme } from "../script/authStyle";
 import { updateUser } from "../script/userQueries";
 import Stadistics from "./Stadistics";
+import { handleDeleteUser } from "../script/handlers";
 
 Amplify.configure(config);
 
@@ -275,9 +276,7 @@ function App() {
                     Sign Out
                   </Button>
                   <AccountSettings.DeleteUser
-                    onSuccess={() =>
-                      alert(`User ${user.username} successfully deleted`)
-                    }
+                    onSuccess={() => handleDeleteUser(user)}
                   />
                 </Flex>
               </View>

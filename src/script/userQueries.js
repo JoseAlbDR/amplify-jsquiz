@@ -52,16 +52,16 @@ export async function getUser(user) {
   try {
     const oneUser = await API.graphql({
       query: queries.getUser,
-      variables: { id: user.attributes.sub },
+      variables: { id: user?.attributes.sub },
     });
 
     if (!oneUser.data.getUser) {
       const newUser = await createUser(user);
-      return newUser.data.createUser;
+      return newUser?.data.createUser;
     } else {
-      return oneUser.data.getUser;
+      return oneUser?.data.getUser;
     }
   } catch (err) {
-    console.log(err.message);
+    console.log(err);
   }
 }
