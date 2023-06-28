@@ -23,6 +23,7 @@ import {
   Card,
   Flex,
   ThemeProvider,
+  defaultTheme,
 } from "@aws-amplify/ui-react";
 import { API } from "aws-amplify";
 import { listQuestions } from "../graphql/queries";
@@ -250,7 +251,7 @@ function App() {
 
   return (
     // Authenticator
-    <ThemeProvider theme={Theme()}>
+    <ThemeProvider theme={defaultTheme}>
       <Authenticator components={components}>
         {({ signOut, user }) => (
           <div className="app">

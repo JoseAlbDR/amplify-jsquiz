@@ -40,6 +40,9 @@ export const Theme = function () {
             100: tokens.colors.teal["10"],
           },
         },
+        text: {
+          fontSize: { value: "2rem" },
+        },
       },
       components: {
         tabs: {
