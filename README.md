@@ -25,34 +25,6 @@ The Quiz App uses the following dependencies:
 
 The main files and directories in the project are structured as follows:
 
-├── src
-│ ├── components
-│ │ ├── Header.js
-│ │ ├── Main.js
-│ │ ├── Loader.js
-│ │ ├── Error.js
-│ │ ├── Question.js
-│ │ ├── StartScreen.js
-│ │ ├── NextButton.js
-│ │ ├── PrevButton.js
-│ │ ├── Progress.js
-│ │ ├── FinishScreen.js
-│ │ ├── Footer.js
-│ │ ├── Timer.js
-│ │ ├── PostQuestionForm.js
-│ │ ├── Stadistics.js
-│ ├── aws-exports.js
-│ ├── graphql
-│ │ ├── mutations.js
-│ │ ├── queries.js
-│ ├── script
-│ │ ├── authStyle.js
-│ │ ├── userQueries.js
-│ ├── App.js
-│ ├── index.js
-├── package.json
-├── README.md
-
 - `src/components`: Contains all the reusable components used in the application.
 - `src/aws-exports.js`: Configuration file for AWS Amplify.
 - `src/graphql`: Contains GraphQL mutation and query definitions.
