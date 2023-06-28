@@ -53,6 +53,7 @@ const initialState = {
   wrongQuestionIndex: [],
   curOpen: null,
   userData: {},
+  loadingUser: true,
 };
 
 let initialQuestions;
@@ -69,6 +70,7 @@ function reducer(state, action) {
         status: "ready",
       };
     case "loadUser":
+      // console.log(action.payload);
       // console.log(action.payload);
       return {
         ...state,
@@ -139,9 +141,10 @@ function reducer(state, action) {
       return {
         ...state,
         status: "finished",
-        // userData: updatedUser,
         highScore:
           state.score > state.highScore ? state.score : state.highScore,
+        userData: state.userData,
+        loadingUser: false,
       };
     // Reset button
     case "restart":
@@ -182,6 +185,12 @@ function reducer(state, action) {
         ...state,
         curOpen: state.curOpen === action.payload ? null : action.payload,
       };
+
+    case "loadingUser":
+      return {
+        ...state,
+        loadingUser: action.payload,
+      };
     default:
       throw new Error("Unknow action.");
   }
@@ -203,6 +212,7 @@ function App() {
     wrongQuestionIndex,
     curOpen,
     userData,
+    loadingUser,
   } = state;
 
   // AddQuestion to DB
@@ -277,11 +287,8 @@ function App() {
               </View>
             </>
 
-            {Object.keys(userData).length === 0 &&
-              userData.constructor === Object && (
-                <Loader msg="Loading User..." />
-              )}
-            {userData && <Stadistics userData={userData} />}
+            {loadingUser && <Loader msg="Loading User..." />}
+            {!loadingUser && <Stadistics userData={userData} />}
 
             <Header />
             <>
@@ -388,6 +395,7 @@ function App() {
                       : highScore
                   }
                   user={user}
+                  loadingUser={loadingUser}
                 />
               )}
             </Main>

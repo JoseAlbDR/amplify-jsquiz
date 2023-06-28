@@ -21,7 +21,7 @@ export async function updateUser(curUser, userData) {
         input: userDetails,
       },
     });
-    console.log(updatedUser);
+
     return updatedUser;
   } catch (err) {
     console.log(err);

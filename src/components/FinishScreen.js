@@ -7,13 +7,20 @@ function FinishScreen({
   highScore,
   failedQuestions,
   user,
+  loadingUser,
 }) {
   useEffect(
     function () {
       async function loadUser() {
         try {
+          dispatch({ type: "loadingUser", payload: true });
           const currentUser = await getUser(user);
-          dispatch({ type: "loadUser", payload: currentUser });
+          setTimeout(function () {
+            dispatch({ type: "loadUser", payload: currentUser });
+          }, 1000);
+          setTimeout(function () {
+            dispatch({ type: "loadingUser", payload: false });
+          }, 1000);
         } catch (err) {
           console.log(err);
         }

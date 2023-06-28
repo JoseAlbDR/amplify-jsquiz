@@ -7,10 +7,10 @@ function StartScreen({ numQuestions, dispatch, user, userData }) {
     function () {
       async function loadUser() {
         try {
-          // dispatch({ type: "loadUser", payload: getUser(user) });
-          // console.log(await getUser(user));
+          dispatch({ type: "loadingUser", payload: true });
           const currentUser = await getUser(user);
           dispatch({ type: "loadUser", payload: currentUser });
+          dispatch({ type: "loadingUser", payload: false });
         } catch (err) {
           console.log(err);
         }

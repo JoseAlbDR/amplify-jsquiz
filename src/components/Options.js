@@ -16,7 +16,7 @@ function Options({
     <div className="options">
       {options.map((option, i) => (
         <button
-          key={option}
+          key={i}
           className={`btn btn-option
           ${i === answer ? "answer" : ""}
           ${i === wrongQuestionIndex ? "answer" : ""}
