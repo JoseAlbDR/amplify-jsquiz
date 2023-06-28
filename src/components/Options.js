@@ -21,13 +21,8 @@ function Options({
           ${i === answer ? "answer" : ""}
           ${i === wrongQuestionIndex ? "answer" : ""}
           
-          ${
-            reviewQuestions || answered
-              ? i === correctOption
-                ? "correct"
-                : "wrong"
-              : ""
-          }
+          ${answered ? (i === correctOption ? "correct" : "wrong") : ""}
+          ${reviewQuestions ? (i === correctOption ? "correct" : "") : ""}
           ${i === wrongQuestionIndex ? "review-wrong" : ""}`}
           onClick={() => handleAnswer(i)}
           disabled={reviewQuestions || answered}
