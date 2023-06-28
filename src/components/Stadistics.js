@@ -14,11 +14,11 @@ function Stadistics({ userData }) {
       <p className="stadistics">
         Total questions anwered <strong>{userData.total}</strong>, total correct{" "}
         <strong>
-          {userData.correct}({correctPercentage}%)
+          {userData.correct}({correctPercentage || 0}%)
         </strong>
         , total incorrect{" "}
         <strong>
-          {userData.wrong}({incorrectPercentage}%)
+          {userData.wrong}({incorrectPercentage || 0}%)
         </strong>
         , HighScore <strong>{userData.maxScore}</strong>
       </p>

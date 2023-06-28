@@ -20,7 +20,8 @@ function FinishScreen({
           }, 1000);
           setTimeout(function () {
             dispatch({ type: "loadingUser", payload: false });
-          }, 1000);
+          }, 1100);
+          // dispatch({ type: "loadingUser", payload: false });
         } catch (err) {
           console.log(err);
         }
