@@ -24,6 +24,7 @@ import {
   Flex,
   ThemeProvider,
   defaultTheme,
+  AccountSettings,
 } from "@aws-amplify/ui-react";
 import { API } from "aws-amplify";
 import { listQuestions } from "../graphql/queries";
@@ -257,7 +258,7 @@ function App() {
           <div className="app">
             <>
               <View className="App">
-                <Flex>
+                <Flex alignItems={"center"}>
                   <Card>
                     <Heading
                       level={1}
@@ -266,12 +267,18 @@ function App() {
                       Welcome {user.username}
                     </Heading>
                   </Card>
+
                   <Button
                     className="sign-out-btn"
                     onClick={() => handleSignOut(signOut)}
                   >
                     Sign Out
                   </Button>
+                  <AccountSettings.DeleteUser
+                    onSuccess={() =>
+                      alert(`User ${user.username} successfully deleted`)
+                    }
+                  />
                 </Flex>
               </View>
             </>

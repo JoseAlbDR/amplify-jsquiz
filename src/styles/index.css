@@ -320,6 +320,12 @@ code[class*="language-"] {
   font-family: inherit !important;
 }
 
+.amplify-text {
+  color: #fff !important;
+  background-color: #bf4040 !important;
+  font-size: 1.5rem !important;
+}
+
 .accordion {
   /* width: 700px; */
   margin: 50px auto;
