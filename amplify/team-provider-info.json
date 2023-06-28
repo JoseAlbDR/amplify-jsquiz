@@ -1,4 +1,17 @@
 {
+  "main": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-amplifyjsquiz-main-132844-authRole",
+      "UnauthRoleArn": "arn:aws:iam::354788879944:role/amplify-amplifyjsquiz-main-132844-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::354788879944:role/amplify-amplifyjsquiz-main-132844-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-amplifyjsquiz-main-132844-deployment",
+      "UnauthRoleName": "amplify-amplifyjsquiz-main-132844-unauthRole",
+      "StackName": "amplify-amplifyjsquiz-main-132844",
+      "StackId": "arn:aws:cloudformation:us-east-1:354788879944:stack/amplify-amplifyjsquiz-main-132844/35669ba0-135c-11ee-8b0b-0e3768ed2c1b",
+      "AmplifyAppId": "dwk7p9t7t0o6g"
+    }
+  },
   "staging": {
     "awscloudformation": {
       "AuthRoleName": "amplify-amplifyca9d0c19992d4-staging-105700-authRole",

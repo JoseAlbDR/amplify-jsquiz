@@ -14,7 +14,7 @@ import Timer from "./Timer";
 import { Amplify } from "aws-amplify";
 import config from "../aws-exports";
 import "@aws-amplify/ui-react/styles.css";
-import { createNote as createNoteMutation } from "../graphql/mutations";
+import { createQuestion as createQuestionMutation } from "../graphql/mutations";
 import {
   Authenticator,
   Button,
@@ -25,7 +25,7 @@ import {
   ThemeProvider,
 } from "@aws-amplify/ui-react";
 import { API } from "aws-amplify";
-import { listNotes } from "../graphql/queries";
+import { listQuestions } from "../graphql/queries";
 import PostQuestionForm from "./PostQuestionForm";
 import { components, Theme } from "../script/Auth";
 import { updateUser } from "../js/userQueries";
@@ -220,7 +220,7 @@ function App() {
     };
 
     await API.graphql({
-      query: createNoteMutation,
+      query: createQuestionMutation,
       variables: { input: data },
     });
 
@@ -231,9 +231,9 @@ function App() {
   useEffect(function () {
     async function getData() {
       try {
-        const apiData = await API.graphql({ query: listNotes });
-        const notesFromAPI = apiData.data.listNotes.items;
-        dispatch({ type: "dataRecieved", payload: notesFromAPI });
+        const apiData = await API.graphql({ query: listQuestions });
+        const questionsFromAPI = apiData.data.listQuestions.items;
+        dispatch({ type: "dataRecieved", payload: questionsFromAPI });
       } catch (err) {
         // console.log(err.message);
         dispatch({ type: "dataFailed", payload: err.message });
