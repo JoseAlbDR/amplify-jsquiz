@@ -48,3 +48,4 @@ The Quiz App has the following features:
 ### Credits
 
 The Quiz App is developed by J.Alberto Delgado.
+Original idea from Jonas Schmedtmann
