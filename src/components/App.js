@@ -250,7 +250,7 @@ function App() {
         const questionsFromAPI = apiData.data.listQuestions.items;
         dispatch({ type: "dataRecieved", payload: questionsFromAPI });
       } catch (err) {
-        // console.log(err.message);
+        console.error(err.message);
         dispatch({ type: "dataFailed", payload: err.message });
       }
     }
