@@ -11,7 +11,7 @@ import {
 function PostQuestionForm({ addQuestion }) {
   return (
     <View className="App">
-      <Heading level={1}>My Notes App</Heading>
+      <Heading level={1}>Add Question Form</Heading>
       <View as="form" margin="3rem 0" onSubmit={addQuestion}>
         <Flex direction="column" justifyContent="center">
           <TextField
@@ -76,7 +76,7 @@ function PostQuestionForm({ addQuestion }) {
             required
           />
           <Button type="submit" variation="primary">
-            Create Note
+            Create Question
           </Button>
         </Flex>
       </View>
