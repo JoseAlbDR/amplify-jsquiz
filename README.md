@@ -1,4 +1,4 @@
-# OLD REPO NEW REPO AT [JS-QUIZ NEW REPU](https://github.com/JoseAlbDR/js-quiz)
+# OLD REPO NEW REPO AT [JS-QUIZ NEW REPO](https://github.com/JoseAlbDR/js-quiz)
 ## Quiz App
 
 This is a quiz application built with React. It allows users to answer questions and tracks their scores. The application fetches questions from an API and presents them to the user in a randomized order. Users can choose the number of questions and the difficulty level of the quiz.
